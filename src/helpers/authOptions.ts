@@ -2,12 +2,12 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
 
-
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       name?: string | null;
+      role?: string | null;
       email?: string | null;
       image?: string | null;
     };
@@ -15,11 +15,11 @@ declare module "next-auth" {
   interface User {
     id: string;
     name?: string | null;
+    role?: string | null;
     email?: string | null;
     image?: string | null;
   }
 }
-
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -65,6 +65,7 @@ export const authOptions: NextAuthOptions = {
             return {
               id: user?.id,
               name: user?.name,
+              role: user?.role,
               email: user?.email,
               image: user?.image,
             };
@@ -82,12 +83,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user?.id;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
         session.user.id = token?.id as string;
+        session.user.role = token.role as string;
       }
       return session;
     },
