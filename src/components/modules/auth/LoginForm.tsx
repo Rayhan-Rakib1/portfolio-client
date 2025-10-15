@@ -1,6 +1,5 @@
 "use client";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,38 +24,29 @@ const LoginForm = () => {
     },
   });
 
-
   const onSubmit = async (values: FieldValues) => {
     try {
-      // const res = await login(values);
-      // console.log(res);
-      // if (res?.data?.id) {
-      //   console.log();
-      //   toast.success("User login successfully");
-      //   router.push("/");
-      // }
       signIn("credentials", {
         ...values,
         callbackUrl: "/dashboard",
       });
     } catch (error) {
-      console.log(error);
-      toast.error("Login failed");
+      console.error(error);
+      toast.error("❌ Login failed!");
     }
-  };
-  const handleSocialLogin = (data: any) => {
-    console.log(data);
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <div className="space-y-6 w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <div className="space-y-6 w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md transition-all duration-300">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6 w-full max-w-md"
           >
-            <h2 className="text-3xl font-bold text-center">Login</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white">
+              Login
+            </h2>
 
             {/* Email */}
             <FormField
@@ -64,11 +54,14 @@ const LoginForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Email
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="email"
                       placeholder="Enter your email"
+                      className="bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                       {...field}
                     />
                   </FormControl>
@@ -83,11 +76,14 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">
+                    Password
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="password"
                       placeholder="Enter your password"
+                      className="bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                       {...field}
                     />
                   </FormControl>
@@ -96,29 +92,34 @@ const LoginForm = () => {
               )}
             />
 
-            <Button type="submit" className="w-full mt-2">
+            <Button
+              type="submit"
+              className="w-full mt-2 text-white"
+              style={{ backgroundColor: "rgb(224, 94, 87)" }}
+            >
               Login
             </Button>
 
             <div className="flex items-center justify-center space-x-2">
-              <div className="h-px w-16 bg-gray-300" />
-              <span className="text-sm text-gray-500">or continue with</span>
-              <div className="h-px w-16 bg-gray-300" />
+              <div className="h-px w-16 bg-gray-300 dark:bg-gray-600" />
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                or continue with
+              </span>
+              <div className="h-px w-16 bg-gray-300 dark:bg-gray-600" />
             </div>
           </form>
         </Form>
+
         {/* Social Login Buttons */}
         <div className="flex flex-col gap-3 mt-4">
           <Button
             variant="outline"
-            className="flex items-center justify-center gap-2"
-            onClick={() => handleSocialLogin("github")}
+            className="flex items-center justify-center gap-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-100"
+            onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
           >
-            {/* GitHub */}
             <Image
               src="https://img.icons8.com/ios-glyphs/24/github.png"
               alt="GitHub"
-              className="w-5 h-5"
               width={20}
               height={20}
             />
@@ -127,27 +128,25 @@ const LoginForm = () => {
 
           <Button
             variant="outline"
-            className="flex items-center justify-center gap-2"
-            onClick={() =>
-              signIn("google", {
-                callbackUrl: "/dashboard",
-              })
-            }
+            className="flex items-center justify-center gap-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-100"
+            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
           >
-            {/* Google */}
             <Image
               src="https://img.icons8.com/color/24/google-logo.png"
               alt="Google"
-              className="w-5 h-5"
               width={20}
               height={20}
             />
             Login with Google
           </Button>
         </div>
-        <p className="text-center text-sm text-gray-500 mt-4">
+
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
           Don’t have an account?{" "}
-          <Link href="/register" className="text-blue-500 hover:underline">
+          <Link
+            href="/register"
+            className="text-[rgb(224,94,87)] hover:underline"
+          >
             Register
           </Link>
         </p>

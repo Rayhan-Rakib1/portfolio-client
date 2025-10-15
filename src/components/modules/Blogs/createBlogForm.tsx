@@ -14,8 +14,8 @@ export default function CreateBlogForm() {
     try {
       const formData = new FormData(e.currentTarget);
       await blogCreate(formData);
-      toast.success("Blog created successfully!");
-    //   e.currentTarget.reset();
+      toast.success("Blog  successfully!");
+    //   e.currentTarget.reset();created
     } catch (error) {
       console.error(error);
       toast.error("Failed to create blog.");

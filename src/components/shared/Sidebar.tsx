@@ -58,6 +58,12 @@ export default function Sidebar() {
         >
           <Briefcase className="h-4 w-4" /> Manage comments
         </Link>
+        <Link
+          href="/dashboard/manage-contactMe"
+          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100 hover:text-black transition"
+        >
+          <Briefcase className="h-4 w-4" /> Manage contact Me
+        </Link>
 
         <Link
           href="/dashboard/create-blog"

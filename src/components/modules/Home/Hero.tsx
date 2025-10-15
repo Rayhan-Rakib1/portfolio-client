@@ -4,7 +4,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Github, Linkedin } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Twitter } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -67,7 +67,7 @@ export default function Hero() {
             className="flex justify-center md:justify-start gap-5 mt-5"
           >
             <a
-              href="https://github.com/yourgithub"
+              href="https://github.com/Rayhan-Rakib1"
               target="_blank"
               className="text-gray-700 dark:text-gray-300 hover:text-[rgb(224,94,87)] dark:hover:text-[rgb(224,94,87)] transition"
             >
@@ -79,6 +79,13 @@ export default function Hero() {
               className="text-gray-700 dark:text-gray-300 hover:text-[rgb(224,94,87)] dark:hover:text-[rgb(224,94,87)] transition"
             >
               <Linkedin size={28} />
+            </a>
+            <a
+              href="https://x.com/Rakib_114"
+              target="_blank"
+              className="text-gray-700 dark:text-gray-300 hover:text-[rgb(224,94,87)] dark:hover:text-[rgb(224,94,87)] transition"
+            >
+              <Twitter size={28} />
             </a>
           </motion.div>
         </div>
@@ -92,7 +99,7 @@ export default function Hero() {
         >
           <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-88 md:h-88 rounded-full overflow-hidden shadow-2xl border-4 border-[rgb(224,94,87)]/40 dark:border-[rgb(224,94,87)]/30">
             <Image
-              src="/your-photo.jpg"
+              src="/Rakib.jpg"
               alt="Rayhan Rakib"
               fill
               className="object-cover"

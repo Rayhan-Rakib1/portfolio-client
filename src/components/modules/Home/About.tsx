@@ -35,7 +35,7 @@ const About = () => {
         >
           <div className="relative w-full max-w-sm h-80 md:h-96 rounded-lg overflow-hidden shadow-2xl">
             <Image
-              src="/images/profile.jpg" // তোমার ছবি path
+              src="/rayhan.png"
               alt="Rayhan Rakib"
               fill
               className="object-cover"

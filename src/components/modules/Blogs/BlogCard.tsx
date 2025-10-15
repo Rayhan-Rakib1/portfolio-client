@@ -1,82 +1,99 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Link from "next/link";
-import Image from "next/image";
+"use client";
 
-export default function BlogCard({ post }: { post: any }) {
+import Link from "next/link";
+import { motion } from "framer-motion";
+
+const BlogCard = ({ blog, index }: { blog: any; index: number }) => {
+  const primaryColor = "rgb(224, 94, 87)";
+
   return (
-    <Link
-      href={`/blogs/${post.id}`}
-      className="block group transform hover:-translate-y-1 transition-transform duration-300"
+    <motion.div
+      // 🌀 Card entry animation
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.15, // একটার পর একটা আসবে
+        ease: "easeOut",
+      }}
+      whileHover={{
+        scale: 1.03,
+        boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.15)",
+      }}
+      className="group border dark:border-gray-600 rounded-2xl shadow-md overflow-hidden bg-white dark:bg-gray-700 transition-all duration-300"
     >
-      <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-        {post.thumbnail ? (
-          <div className="relative h-56 w-full overflow-hidden">
-            <Image
-              src={post.thumbnail}
-              alt={post.title}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-        ) : (
-          <div className="h-56 w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-300">
-            No Image
+      {/* 🖼️ Thumbnail */}
+      <div className="relative overflow-hidden">
+        <motion.img
+          src={
+            blog.thumbnail ||
+            "https://via.placeholder.com/600x400?text=No+Image"
+          }
+          alt={blog.title}
+          className="w-full h-52 object-cover"
+          whileHover={{ scale: 1.08 }}
+          transition={{ duration: 0.4 }}
+        />
+
+        {/* 🌟 Featured badge */}
+        {blog.isFeatured && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.4 }}
+            className="absolute top-3 left-3 text-white text-xs font-semibold px-3 py-1 rounded-full"
+            style={{ backgroundColor: primaryColor }}
+          >
+            Featured
+          </motion.span>
+        )}
+      </div>
+
+      {/* 🧠 Content */}
+      <div className="p-5">
+        <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+          <span>{blog.category || "General"}</span>
+          <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
+        </div>
+
+        <h3 className="text-xl font-bold mb-2 group-hover:text-[rgb(224,94,87)] transition-colors duration-300 line-clamp-2">
+          {blog.title}
+        </h3>
+
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+          {blog.excerpt ? blog.excerpt : blog.content?.slice(0, 120) + "..."}
+        </p>
+
+        {blog.tags && blog.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-4">
+            {blog.tags.slice(0, 3).map((tag: string, i: number) => (
+              <span
+                key={i}
+                className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full"
+              >
+                #{tag}
+              </span>
+            ))}
           </div>
         )}
 
-        <div className="p-6">
-          <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
-            {post.title}
-          </h3>
-
-          <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-3">
-            {post.content}
-          </p>
-
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Image
-                src={
-                  post.author.picture ||
-                  "https://cdn-icons-png.flaticon.com/512/9385/9385289.png"
-                }
-                alt={post.author.name}
-                width={36}
-                height={36}
-                className="rounded-full border-2 border-gray-200 dark:border-gray-700"
-              />
-              <span className="text-gray-600 dark:text-gray-300 text-sm flex items-center gap-1">
-                {post.author.name}
-                {post.author.isVerified && (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-blue-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                )}
-              </span>
-            </div>
-            <span className="text-gray-500 dark:text-gray-400 text-sm">
-              {post.views} views
-            </span>
+        <div className="flex justify-between items-center text-sm">
+          <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+            <span>👁 {blog.views || 0}</span>
+            <span>💬 {blog.comments?.length || 0}</span>
           </div>
 
-          <div className="text-right">
-            <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm hover:underline">
-              Read More →
-            </span>
-          </div>
+          <Link
+            href={`/blogs/${blog.id}`}
+            className="text-[rgb(224,94,87)] font-semibold hover:underline"
+          >
+            Read More →
+          </Link>
         </div>
       </div>
-    </Link>
+    </motion.div>
   );
-}
+};
+
+export default BlogCard;
